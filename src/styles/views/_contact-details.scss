@@ -1,0 +1,26 @@
+.contact-details-container {
+	padding: 18px;
+	.links {
+		display: flex;
+		justify-content: space-between;
+
+		img {
+			width: 40px;
+			height: 40px;
+		}
+	}
+
+	.contact-details {
+		place-items: center;
+
+		img {
+			width: 130px;
+			height: 130px;
+			margin-bottom: 10px;
+		}
+
+		p {
+			margin-bottom: 10px;
+		}
+	}
+}

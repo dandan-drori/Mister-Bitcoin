@@ -1,0 +1,50 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+button {
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
+
+	&:active {
+		transform: scale(0.99);
+	}
+}
+
+img {
+	width: 100%;
+	object-fit: contain;
+}
+
+h2 {
+	letter-spacing: 0.8px;
+}
+
+h4 {
+	letter-spacing: 0.3px;
+}
+
+p,
+span {
+	letter-spacing: 0.4px;
+}
+
+ul {
+	list-style: none;
+}
+
+.chart {
+	circle {
+		fill: none !important;
+	}
+}

@@ -1,0 +1,21 @@
+.simple-cards-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 10px;
+}
+
+.simple-card-preview {
+	padding: 10px;
+	box-shadow: 0 0 4px 1px #0000003b;
+	cursor: pointer;
+}
+
+.icon {
+	width: 50px;
+	height: 50px;
+}
+
+.icon-lg {
+	width: 100px;
+	height: 100px;
+}

@@ -1,0 +1,11 @@
+.contact-list {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 10px;
+
+	img {
+		width: 100px;
+	}
+
+	// fix layout for mobile
+}

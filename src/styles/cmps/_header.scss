@@ -1,0 +1,21 @@
+.header {
+	display: flex;
+	justify-content: space-around;
+	background-color: #2b2a2b;
+	color: #eee;
+	padding: 10px;
+
+	a {
+		border-radius: 5px;
+		padding: 3px 7px;
+
+		&.active {
+			background-color: aqua;
+		}
+	}
+
+	.icon-header {
+		height: 50px;
+		width: 50px;
+	}
+}
