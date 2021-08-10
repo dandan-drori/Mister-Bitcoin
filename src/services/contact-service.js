@@ -142,6 +142,7 @@ function sort(arr) {
 function getContacts(filterBy = null) {
 	return new Promise((resolve, reject) => {
 		var contactsToReturn = contacts
+		console.log(filterBy)
 		if (filterBy && filterBy.term) {
 			contactsToReturn = filter(filterBy.term)
 		}
@@ -167,8 +168,7 @@ function deleteContact(id) {
 	})
 }
 
-function _updateContact(contact) {
-	console.log('hello', contact)
+async function _updateContact(contact) {
 	return new Promise((resolve, reject) => {
 		const index = contacts.findIndex(c => contact._id === c._id)
 		if (index !== -1) {
@@ -178,16 +178,16 @@ function _updateContact(contact) {
 	})
 }
 
-function _addContact(contact) {
+async function _addContact(contact) {
 	return new Promise((resolve, reject) => {
 		contact._id = utilService.makeId()
-		contacts.push(contact)
+		contacts.unshift(contact)
 		resolve(contact)
 	})
 }
 
-function saveContact(contact) {
-	return contact._id ? _updateContact(contact) : _addContact(contact)
+async function saveContact(contact) {
+	return contact._id ? await _updateContact(contact) : await _addContact(contact)
 }
 
 function getEmptyContact() {

@@ -9,6 +9,10 @@
 		border-radius: 5px;
 		padding: 3px 7px;
 
+		&:hover {
+			background-color: rgba(150, 150, 150, 0.5);
+		}
+
 		&.active {
 			background-color: aqua;
 		}

@@ -1,35 +1,13 @@
 .contact-preview {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 
 	&:hover {
 		background-color: #cccccccc;
 	}
 
-	a {
-		display: flex;
-		align-items: center;
-
-		h2 {
-			font-size: 1.3rem;
-		}
-	}
-
-	.actions {
-		display: flex;
-		align-items: center;
-		gap: 20px;
-
-		button {
-			transform: scale(1.2);
-			margin-top: 4px;
-		}
-	}
-
-	.icon-preview {
-		width: 30px;
-		height: 30px;
+	h2 {
+		font-size: 1.3rem;
 	}
 
 	@include for-mobile-layout {

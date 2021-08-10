@@ -3,8 +3,11 @@ import { contactService } from '../services/contact-service.js'
 import { Link } from 'react-router-dom'
 import backIcon from '../assets/icons/back.png'
 import pencilIcon from '../assets/icons/edit.png'
+import { TransferFund } from '../cmps/TransferFund'
+import { MovesList } from '../cmps/MovesList'
+import { connect } from 'react-redux'
 
-export class ContactDetails extends Component {
+class _ContactDetails extends Component {
 	state = {
 		contactId: null,
 		contact: {},
@@ -15,11 +18,17 @@ export class ContactDetails extends Component {
 		this.setState({ contactId }, async () => {
 			try {
 				const contact = await contactService.getContactById(this.state.contactId)
-				console.log('contact', contact)
 				this.setState({ contact })
 			} catch (err) {
 				console.log(err)
 			}
+		})
+	}
+
+	getMoves = () => {
+		if (!this.props.loggedInUser) return []
+		return this.props.loggedInUser.moves.filter(move => {
+			return move.toId === this.state.contact._id
 		})
 	}
 
@@ -41,7 +50,17 @@ export class ContactDetails extends Component {
 					<p>Phone: {phone}</p>
 					<p>Email: {email}</p>
 				</section>
+				<TransferFund contact={this.state.contact} />
+				<MovesList moves={this.getMoves()} title='Your Moves:' />
 			</section>
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		loggedInUser: state.userModule.loggedInUser,
+	}
+}
+
+export const ContactDetails = connect(mapStateToProps)(_ContactDetails)

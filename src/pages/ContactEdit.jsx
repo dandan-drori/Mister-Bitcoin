@@ -3,23 +3,32 @@ import { contactService } from '../services/contact-service.js'
 import { Link } from 'react-router-dom'
 import backIcon from '../assets/icons/back.png'
 import trashIcon from '../assets/icons/delete.png'
+import { connect } from 'react-redux'
+import { getContactById, saveContact, removeContact } from '../store/actions/contactActions.js'
 
-export class ContactEdit extends Component {
+class _ContactEdit extends Component {
 	state = {
 		contact: null,
 	}
 
 	async componentDidMount() {
-		const contactId = this.props.match.params.id
-		const contact = contactId
-			? await contactService.getContactById(contactId)
-			: contactService.getEmptyContact()
+		const contact = await this.loadContact()
 		this.setState({ contact })
+	}
+
+	loadContact = async () => {
+		const { id } = this.props.match.params
+		if (id) {
+			await this.props.getContactById(id)
+			return this.props.contact
+		}
+		return contactService.getEmptyContact()
 	}
 
 	handleSubmit = async ev => {
 		ev.preventDefault()
-		await contactService.saveContact(this.state.contact)
+		const { contact } = this.state
+		await this.props.saveContact(contact)
 		this.props.history.push('/contact')
 	}
 
@@ -27,6 +36,11 @@ export class ContactEdit extends Component {
 		var field = target.id
 		var value = target.type === 'number' ? +target.value : target.value
 		this.setState(prevState => ({ contact: { ...prevState.contact, [field]: value } }))
+	}
+
+	onRemoveContact = async () => {
+		await this.props.removeContact(this.state.contact._id)
+		this.props.history.push('/contact')
 	}
 
 	render() {
@@ -38,16 +52,15 @@ export class ContactEdit extends Component {
 					<Link to={`/contact/${_id}`}>
 						<img src={backIcon} alt='back' />
 					</Link>
-					<Link to='/contact'>
-						{/* change delete to button and connect method for deleting */}
+					<button onClick={this.onRemoveContact}>
 						<img src={trashIcon} alt='trash' />
-					</Link>
+					</button>
 				</section>
 
 				<section className='flex-container'>
 					<img src={`https://robohash.org/${_id}`} alt='contact' />
 				</section>
-				<form onSubmit={this.handleSubmit} className='main-layout'>
+				<form className='main-layout'>
 					<label>
 						Name:
 						<input type='text' id='name' value={name} onChange={this.handleChange} />
@@ -61,10 +74,20 @@ export class ContactEdit extends Component {
 						<input type='text' id='email' value={email} onChange={this.handleChange} />
 					</label>
 					<section className='flex-container'>
-						<button>Save</button>
+						<button onClick={this.handleSubmit}>Save</button>
 					</section>
 				</form>
 			</section>
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		contact: state.contactModule.currContact,
+	}
+}
+
+const mapDispatchToProps = { saveContact, getContactById, removeContact }
+
+export const ContactEdit = connect(mapStateToProps, mapDispatchToProps)(_ContactEdit)

@@ -1,0 +1,38 @@
+.moves-list {
+	margin: 0 auto;
+	width: 450px;
+	border-radius: 10px;
+	background-color: #dddddddd;
+	padding: 20px;
+
+	.suggestion {
+		font-size: 1rem;
+		font-weight: normal;
+	}
+	a {
+		color: #222;
+
+		&:hover {
+			color: red;
+		}
+	}
+
+	li {
+		border-bottom: 1px solid #aaaaaaff;
+		padding-bottom: 5px;
+		margin-bottom: 10px;
+
+		&:first-of-type {
+			font-weight: bold;
+			font-size: 1.1rem;
+		}
+
+		a {
+			text-decoration: underline;
+		}
+
+		p {
+			margin-bottom: 3px;
+		}
+	}
+}

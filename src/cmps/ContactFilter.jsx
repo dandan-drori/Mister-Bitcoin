@@ -1,6 +1,8 @@
 import { Component } from 'react'
+import { connect } from 'react-redux'
+import { setFilterBy, loadContacts } from '../store/actions/contactActions.js'
 
-export class ContactFilter extends Component {
+class _ContactFilter extends Component {
 	state = {
 		term: '',
 	}
@@ -9,18 +11,19 @@ export class ContactFilter extends Component {
 		var field = target.id
 		var value = target.type === 'number' ? +target.value : target.value
 		this.setState({ [field]: value }, () => {
-			this.props.onSetFilter(this.state)
+			this.props.setFilterBy(this.state)
+			this.props.loadContacts()
 		})
 	}
 
 	render() {
-		const { filterBy } = this.props
+		const { term } = this.state
 		return (
 			<section className='contact-filter'>
 				<input
 					type='text'
 					id='term'
-					value={filterBy.term}
+					value={term}
 					onChange={this.handleChange}
 					placeholder='Search'
 				/>
@@ -28,3 +31,10 @@ export class ContactFilter extends Component {
 		)
 	}
 }
+
+const mapDispatchToProps = {
+	setFilterBy,
+	loadContacts,
+}
+
+export const ContactFilter = connect(undefined, mapDispatchToProps)(_ContactFilter)

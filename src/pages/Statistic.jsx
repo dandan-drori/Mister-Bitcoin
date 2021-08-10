@@ -33,14 +33,15 @@ export class Statistic extends Component {
 
 	render() {
 		return this.isChartsLoading() ? (
-			<div>Loading...</div>
+			<section>Loading...</section>
 		) : (
-			<div>
-				<h2>Price Per Day</h2>
+			<section className='statistic'>
+				<h1>Bitcoin Data</h1>
+				<h3>Price Per Day</h3>
 				<Chart data={this.pricePerDay()} color='#d1192e' />
-				<h2>Confirmed Transactions Per Day</h2>
+				<h3>Confirmed Transactions Per Day</h3>
 				<Chart data={this.confirmedTransactions()} color='#80d119' />
-			</div>
+			</section>
 		)
 	}
 }

@@ -1,30 +1,30 @@
 import { Component } from 'react'
-import { userService } from '../services/user-service.js'
 import { bitcoinService } from '../services/bitcoin-service.js'
 import coinsIcon from '../assets/icons/coins.png'
 import contactIcon from '../assets/icons/contact.png'
 import bitcoinIcon from '../assets/icons/bitcoin.png'
+import { connect } from 'react-redux'
+import { initUser } from '../store/actions/userActions.js'
+import { MovesList } from '../cmps/MovesList'
 
-export class Home extends Component {
+class _Home extends Component {
 	state = {
-		user: {},
 		bitcoinRate: null,
 	}
 
-	componentDidMount() {
-		const user = userService.getUser()
-		this.setState({ user }, async () => {
-			try {
-				const bitcoinRate = await bitcoinService.getRate(this.state.user.coins)
-				this.setState({ bitcoinRate })
-			} catch (err) {
-				console.log(err)
-			}
-		})
+	async componentDidMount() {
+		try {
+			// await this.props.initUser()
+			const bitcoinRate = await bitcoinService.getRate(this.props.loggedInUser.coins)
+			this.setState({ bitcoinRate })
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	render() {
-		const { name, coins } = this.state.user
+		if (!this.props.loggedInUser) return <div>Loading...</div>
+		const { name, coins, moves } = this.props.loggedInUser
 		const { bitcoinRate } = this.state
 		return (
 			<section className='home'>
@@ -38,10 +38,23 @@ export class Home extends Component {
 
 					<p>
 						<img src={bitcoinIcon} alt='coins' className='icon icon-home' />
-						Bitcoin Rate: 1 Cent is {bitcoinRate} Bitcoin
+						BTC: {bitcoinRate}
 					</p>
 				</section>
+				<MovesList moves={moves.slice(0, 3)} title='Your Last 3 Moves:' />
 			</section>
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		loggedInUser: state.userModule.loggedInUser,
+	}
+}
+
+const mapDispatchToProps = {
+	initUser,
+}
+
+export const Home = connect(mapStateToProps, mapDispatchToProps)(_Home)
