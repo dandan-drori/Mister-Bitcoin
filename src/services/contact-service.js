@@ -142,7 +142,6 @@ function sort(arr) {
 function getContacts(filterBy = null) {
 	return new Promise((resolve, reject) => {
 		var contactsToReturn = contacts
-		console.log(filterBy)
 		if (filterBy && filterBy.term) {
 			contactsToReturn = filter(filterBy.term)
 		}
